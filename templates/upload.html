@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Upload a file</title>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f2f5;
+        color: #333740;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .container {
+        max-width: 90%;
+        margin: 40px auto;
+        padding: 20px;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .page-header h1 {
+        color: #1a202c;
+        margin: 0;
+        flex-grow: 1;
+      }
+
+      .upload-button {
+        background-color: #4c51bf;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        font-size: 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        line-height: normal;
+        white-space: nowrap;
+      }
+
+      .upload-button:hover {
+        background-color: #5a60a5;
+        transform: scale(1.05);
+      }
+
+      .upload-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.5);
+      }
+
+      .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-around;
+      }
+
+      .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        flex: 1;
+        min-width: 300px;
+        margin-bottom: 20px;
+      }
+
+      .card-header {
+        background-color: #e2e8f0;
+        color: #1a202c;
+        border-radius: 12px;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .card-body {
+        padding: 15px;
+      }
+
+      .card-body p,
+      .card-body h3 {
+        margin: 10px 0;
+      }
+
+      @media (max-width: 768px) {
+        .flex-container {
+          flex-direction: column;
+        }
+
+        .card {
+          min-width: auto;
+          max-width: 600px;
+          margin: 10px auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="flex-container">
+        <section class="card">
+          <div class="card-header">Upload a file</div>
+          <div class="card-body">
+            <form
+              action="/upload"
+              method="post"
+              enctype="multipart/form-data"
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <input type="file" name="file" />
+              <input class="upload-button" type="submit" value="Upload" />
+            </form>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">Latest Reports</div>
+          <div class="card-body">
+            <ul style="list-style-type: none">
+              {% for file in files %}
+              <li><a href="/reports/{{ file }}">{{ file }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

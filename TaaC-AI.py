@@ -20,7 +20,7 @@ class Config:
     @staticmethod
     def set_output_file(service_name):
         current_date = date.today().strftime("%Y-%m-%d")
-        Config.HTML_OUTPUT_FILE = f"{service_name.replace(' ', '_')}_{current_date}_ThreatModelingReport.html"
+        Config.HTML_OUTPUT_FILE = f"reports/{service_name.replace(' ', '_')}_{current_date}_ThreatModelingReport.html"
 
 class YAMLDataHandler:
     @staticmethod
@@ -367,7 +367,7 @@ def main():
     service_name = service_info.get('Description', {}).get('Name', 'Report')
     Config.set_output_file(service_name)
 
-    PrintManager.print_progress(args.yaml_file)
+    # PrintManager.print_progress(args.yaml_file)
     
     data_flows = service_info.get('dataFlow', [])
     data_flow_json = ThreatModeling.convert_data_flow_to_json(data_flows)
@@ -404,9 +404,12 @@ def main():
     renderer = HTMLReportRenderer(service_info, data_flow_json, threat_analysis_html)
     html_report = renderer.render()
     
-    with open(Config.HTML_OUTPUT_FILE, 'w') as file:
+    with open(Config.HTML_OUTPUT_FILE, 'w', encoding="utf-8") as file:
         file.write(html_report)
-    PrintManager.print_completion()
+    # PrintManager.print_completion()
+    print(Config.HTML_OUTPUT_FILE)
+
+    return Config.HTML_OUTPUT_FILE
 
 if __name__ == "__main__":
     main()
